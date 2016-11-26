@@ -23,4 +23,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_below="@id/section_tabs"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:foregroundTint="@color/colorPrimary"
+        android:visibility="gone"/>
+
 </FrameLayout>

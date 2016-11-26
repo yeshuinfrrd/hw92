@@ -126,6 +126,153 @@ public class Legislator implements Parcelable {
 	@Expose
 	public String ocdId;
 
+	public String getBioguideId() {
+		return bioguideId;
+	}
+
+	public Boolean getInOffice() {
+		return inOffice;
+	}
+
+	public String getThomasId() {
+		return thomasId;
+	}
+
+	public String getGovtrackId() {
+		return govtrackId;
+	}
+
+	public String getCrpId() {
+		return crpId;
+	}
+
+	public List<String> getFecIds() {
+		return fecIds;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public String getNameSuffix() {
+		return nameSuffix;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public String getLeadershipRole() {
+		return leadershipRole;
+	}
+
+	public String getTermStart() {
+		return termStart;
+	}
+
+	public String getTermEnd() {
+		return termEnd;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public String getParty() {
+		return party;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getChamber() {
+		return chamber;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public String getOffice() {
+		return office;
+	}
+
+	public String getContactForm() {
+		return contactForm;
+	}
+
+	public Integer getVotesmartId() {
+		return votesmartId;
+	}
+
+	public Integer getIcpsrId() {
+		return icpsrId;
+	}
+
+	public Integer getSenateClass() {
+		return senateClass;
+	}
+
+	public String getLisId() {
+		return lisId;
+	}
+
+	public String getStateRank() {
+		return stateRank;
+	}
+
+	public Integer getDistrict() {
+		return district;
+	}
+
+	public String getOcEmail() {
+		return ocEmail;
+	}
+
+	public String getTwitterId() {
+		return twitterId;
+	}
+
+	public String getYoutubeId() {
+		return youtubeId;
+	}
+
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	public String getOcdId() {
+		return ocdId;
+	}
 
 	protected Legislator(Parcel in) {
 		bioguideId = in.readString();

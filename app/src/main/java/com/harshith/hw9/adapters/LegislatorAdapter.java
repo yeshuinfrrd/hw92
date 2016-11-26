@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.harshith.hw9.R;
+import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerViewInterface;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by yashw on 24-11-2016.
@@ -22,11 +25,11 @@ import java.util.HashMap;
 
 public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.LegislatorViewHolder> implements FastScrollRecyclerViewInterface {
 
-	private ArrayList<String> dataSet;
+	private List<Legislator> dataSet;
 	private HashMap<String, Integer> mMapIndex;
 	private Context mContext;
 
-	public LegislatorAdapter(Context context, ArrayList<String> dataSet, HashMap<String, Integer> mapIndex) {
+	public LegislatorAdapter(Context context, List<Legislator> dataSet, HashMap<String, Integer> mapIndex) {
 		this.dataSet=dataSet;
 		this.mMapIndex=mapIndex;
 		mContext=context;
@@ -40,7 +43,12 @@ public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.Le
 
 	@Override
 	public void onBindViewHolder(LegislatorViewHolder holder, int position) {
-		holder.textViewName.setText(dataSet.get(position));
+		holder.textViewName.setText(dataSet.get(position).getLastName() + ", " + dataSet.get(position).getFirstName());
+		String details=prepareDetails(position);
+		holder.textViewDetails.setText(details);
+		Picasso.with(mContext)
+				.load("https://theunitedstates.io/images/congress/original/"+dataSet.get(position).getBioguideId()+".jpg")
+				.into(holder.imageThumbNail);
 	}
 
 	@Override
@@ -54,6 +62,18 @@ public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.Le
 	@Override
 	public HashMap<String, Integer> getMapIndex() {
 		return this.mMapIndex;
+	}
+
+	private String prepareDetails(int position) {
+		StringBuilder detailsString = new StringBuilder();
+		detailsString.append("("+dataSet.get(position).getParty()+")");
+		detailsString.append(dataSet.get(position).getStateName());
+		if(dataSet.get(position).getDistrict()!=null) {
+			detailsString.append(" District - " + dataSet.get(position).getDistrict());
+		} else {
+			detailsString.append(" District - N/A" );
+		}
+		return detailsString.toString();
 	}
 
 	public class LegislatorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

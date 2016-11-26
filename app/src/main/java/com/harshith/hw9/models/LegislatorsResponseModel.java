@@ -21,4 +21,16 @@ public class LegislatorsResponseModel {
 	@SerializedName("page")
 	@Expose
 	public Page page;
+
+	public List<Legislator> getResult() {
+		return result;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public Page getPage() {
+		return page;
+	}
 }

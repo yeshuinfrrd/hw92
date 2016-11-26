@@ -4,6 +4,7 @@
              android:layout_height="match_parent"
              tools:context="com.harshith.hw9.fragments.ByStateFragment">
 
+
     <com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerView
         android:id="@+id/recycler_view_by_state"
         android:layout_width="match_parent"

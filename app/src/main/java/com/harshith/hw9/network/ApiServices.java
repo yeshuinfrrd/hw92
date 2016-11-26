@@ -1,10 +1,13 @@
 package com.harshith.hw9.network;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 
+import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.models.LegislatorsResponseModel;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,8 +31,8 @@ public class ApiServices {
 
 	private final String COMMITTEE_API_END_POINT = "http://104.198.0.197:8080/committees?apikey=b2aff0a1fbed4ac08b2daefb56f7c9a4&per_page=all";
 
-	public ApiServices(Activity activity) {
-		apiResponseCallbacks=new WeakReference<ApiResponseCallbacks>((ApiResponseCallbacks)activity);
+	public ApiServices(Fragment fragment) {
+		apiResponseCallbacks=new WeakReference<ApiResponseCallbacks>((ApiResponseCallbacks)fragment);
 	}
 
 	public void fetchLegislators() {
@@ -39,7 +42,7 @@ public class ApiServices {
 			@Override
 			public void onResponse(Call<LegislatorsResponseModel> call, Response<LegislatorsResponseModel> response) {
 				if(response.isSuccessful()) {
-					apiResponseCallbacks.get().onFetchLegislatorsSuccessful();
+					apiResponseCallbacks.get().onFetchLegislatorsSuccessful(response.body().getResult());
 				} else {
 					apiResponseCallbacks.get().onFetchLegislatorsFailure();
 				}
@@ -54,7 +57,7 @@ public class ApiServices {
 	}
 
 	public interface ApiResponseCallbacks {
-		void onFetchLegislatorsSuccessful();
+		void onFetchLegislatorsSuccessful(List<Legislator> legislatorList);
 		void onFetchLegislatorsFailure();
 		void onFetchBillsSuccessful();
 		void onFetchBillsFailure();

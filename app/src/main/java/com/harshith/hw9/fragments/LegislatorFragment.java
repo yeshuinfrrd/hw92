@@ -5,35 +5,41 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.harshith.hw9.R;
 import com.harshith.hw9.adapters.FragmentAdapter;
-import com.harshith.hw9.adapters.LegislatorAdapter;
+import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.network.ApiServices;
-import com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerViewItemDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LegislatorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LegislatorFragment extends Fragment {
+public class LegislatorFragment extends Fragment implements ApiServices.ApiResponseCallbacks{
 
-	private HashMap<String, Integer> mapIndex=new HashMap<>();
-	private ArrayList<String> myDataSet=new ArrayList<>();
+	private List<Legislator> mLegislatorsList = new ArrayList<>();
+	private List<Legislator> mHouseList = new ArrayList<>();
+	private List<Legislator> mSenateList = new ArrayList<>();
+
+	private HashMap<String, Integer> legislatorsMapIndex = new HashMap<>();
+	private HashMap<String, Integer> houseMapIndex = new HashMap<>();
+	private HashMap<String, Integer> senateMapIndex = new HashMap<>();
 
 	private TabLayout mTabLayout;
 	private ViewPager mViewPager;
+	private ProgressBar mProgressBar;
 
 	public LegislatorFragment() {
 		// Required empty public constructor
@@ -62,22 +68,82 @@ public class LegislatorFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view= inflater.inflate(R.layout.fragment_legislator, container, false);
-		setupData();
-		setupTabs(view);
+		setupUiComponents(view);
+		mProgressBar.setVisibility(View.VISIBLE);
+		ApiServices apiServices=new ApiServices(this);
+		apiServices.fetchLegislators();
 		return view;
 	}
 
-	private void setupData() {
-		for(int i=0; i<26; i++) {
-			myDataSet.add(Character.toString((char)(65 + i)) + " Row item");
-		}
-		mapIndex = calculateIndexesForName(myDataSet);
+	@Override
+	public void onFetchLegislatorsSuccessful(List<Legislator> legislatorList) {
+		mLegislatorsList=legislatorList;
+		setupData();
+		mProgressBar.setVisibility(View.GONE);
+		setupTabs();
 	}
 
-	private HashMap<String, Integer> calculateIndexesForName(ArrayList<String> items){
+	@Override
+	public void onFetchLegislatorsFailure() {
+
+	}
+
+	@Override
+	public void onFetchBillsSuccessful() {
+
+	}
+
+	@Override
+	public void onFetchBillsFailure() {
+
+	}
+
+	@Override
+	public void onFetchCommitteesSuccessful() {
+
+	}
+
+	@Override
+	public void onFetchCommitteesFailure() {
+
+	}
+
+	/**
+	 * Extract data received from api to pass it to appropriate fragments
+	 */
+	private void setupData() {
+		//first sort the list for By State Tab
+		Collections.sort(mLegislatorsList,new Comparator<Legislator>() {
+			@Override
+			public int compare(Legislator l1, Legislator l2) {
+				return l1.getStateName().compareTo(l2.getStateName());
+			}
+		});
+		//Separate data into house and senate
+		for(Legislator legislator:mLegislatorsList) {
+			String chamber=legislator.getChamber();
+			if(chamber.equalsIgnoreCase("house")) {
+				mHouseList.add(legislator);
+			} else if(chamber.equalsIgnoreCase("senate")){
+				mSenateList.add(legislator);
+			}
+		}
+		//prepare index for recyclerview
+		legislatorsMapIndex = calculateIndexesForName(mLegislatorsList);
+		houseMapIndex = calculateIndexesForName(mHouseList);
+		senateMapIndex = calculateIndexesForName(mSenateList);
+	}
+
+	private void setupUiComponents(View view) {
+		mTabLayout=(TabLayout)view.findViewById(R.id.section_tabs);
+		mViewPager=(ViewPager)view.findViewById(R.id.view_pager_container);
+		mProgressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
+	}
+
+	private HashMap<String, Integer> calculateIndexesForName(List<Legislator> items){
 		HashMap<String, Integer> mapIndex = new LinkedHashMap<String, Integer>();
 		for (int i = 0; i<items.size(); i++){
-			String name = items.get(i);
+			String name = items.get(i).stateName;
 			String index = name.substring(0,1);
 			index = index.toUpperCase();
 
@@ -88,20 +154,17 @@ public class LegislatorFragment extends Fragment {
 		return mapIndex;
 	}
 
-	private void setupTabs(View view) {
-		mViewPager = (ViewPager)view.findViewById(R.id.view_pager_container);
-		mTabLayout = (TabLayout)view.findViewById(R.id.section_tabs);
+	private void setupTabs() {
 		mTabLayout.addTab(mTabLayout.newTab().setText("By State"));
 		mTabLayout.addTab(mTabLayout.newTab().setText("House"));
 		mTabLayout.addTab(mTabLayout.newTab().setText("Senate"));
 		ArrayList<Fragment> fragmentList = new ArrayList<>();
-		fragmentList.add(ByStateFragment.newInstance(myDataSet,mapIndex));
-		fragmentList.add(ByStateFragment.newInstance(myDataSet,mapIndex));
-		fragmentList.add(ByStateFragment.newInstance(myDataSet,mapIndex));
+		fragmentList.add(ByStateFragment.newInstance(mLegislatorsList, legislatorsMapIndex));
+		fragmentList.add(ByStateFragment.newInstance(mHouseList, houseMapIndex));
+		fragmentList.add(ByStateFragment.newInstance(mSenateList, senateMapIndex));
 		FragmentAdapter adapter=new FragmentAdapter(getFragmentManager(),getContext(),fragmentList);
 		mViewPager.setAdapter(adapter);
 		mViewPager.setOffscreenPageLimit(fragmentList.size());
 		mTabLayout.setupWithViewPager(mViewPager);
 	}
-
 }

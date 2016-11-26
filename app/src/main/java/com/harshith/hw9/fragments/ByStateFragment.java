@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import com.harshith.hw9.R;
 import com.harshith.hw9.adapters.FragmentAdapter;
 import com.harshith.hw9.adapters.LegislatorAdapter;
+import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerViewItemDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +28,7 @@ import java.util.HashSet;
  */
 public class ByStateFragment extends Fragment {
 
-	private ArrayList<String> myDataSet = new ArrayList<String>();
+	private List<Legislator> myDataSet = new ArrayList<>();
 
 	HashMap<String, Integer> mapIndex=new HashMap<>();
 
@@ -42,7 +44,7 @@ public class ByStateFragment extends Fragment {
 	 * @return A new instance of fragment ByStateFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static ByStateFragment newInstance(ArrayList<String> dataSet, HashMap<String,Integer> mapIndex) {
+	public static ByStateFragment newInstance(List<Legislator> dataSet, HashMap<String,Integer> mapIndex) {
 		ByStateFragment fragment = new ByStateFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
