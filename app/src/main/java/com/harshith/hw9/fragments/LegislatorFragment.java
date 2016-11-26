@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.harshith.hw9.R;
 import com.harshith.hw9.adapters.FragmentAdapter;
 import com.harshith.hw9.adapters.LegislatorAdapter;
+import com.harshith.hw9.network.ApiServices;
 import com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerViewItemDecoration;
 
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class LegislatorFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view= inflater.inflate(R.layout.fragment_legislator, container, false);
-		setupTabs(view);
 		setupData();
+		setupTabs(view);
 		return view;
 	}
 
