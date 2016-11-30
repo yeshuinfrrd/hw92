@@ -1,8 +1,10 @@
 package com.harshith.hw9;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.harshith.hw9.fragments.BillsFragment;
+import com.harshith.hw9.fragments.CommitteeFragment;
+import com.harshith.hw9.fragments.FavoritesFragment;
 import com.harshith.hw9.fragments.LegislatorFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -34,11 +39,13 @@ public class MainActivity extends AppCompatActivity
 		toggle.syncState();
 
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+		getSupportActionBar().setTitle("Legislators");
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(R.id.tab_layout_container, LegislatorFragment.newInstance())
+				.add(R.id.tab_layout_container, LegislatorFragment.newInstance())
+				.addToBackStack("legislator")
 				.commit();
-		navigationView.setNavigationItemSelectedListener(this);
 	}
 
 	@Override
@@ -69,23 +76,40 @@ public class MainActivity extends AppCompatActivity
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if(id == R.id.home)
+			super.onBackPressed();
 
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item) {
+		FragmentManager fragmentManager=getSupportFragmentManager();
 		// Handle navigation view item clicks here.
 		switch (item.getItemId()) {
 			case R.id.nav_legislators:
+				getSupportActionBar().setTitle("Legislators");
+				fragmentManager.beginTransaction()
+						.replace(R.id.tab_layout_container,LegislatorFragment.newInstance(),"legislatorFragment").commit();
 				break;
 			case R.id.nav_bills:
+				getSupportActionBar().setTitle("Bills");
+				fragmentManager.beginTransaction()
+						.replace(R.id.tab_layout_container,BillsFragment.newInstance(),"billsFragment").commit();
 				break;
 			case R.id.nav_committees:
+				getSupportActionBar().setTitle("Committtee");
+				fragmentManager.beginTransaction()
+						.replace(R.id.tab_layout_container, CommitteeFragment.newInstance(),"committeeFragment").commit();
 				break;
 			case R.id.nav_favorites:
+				getSupportActionBar().setTitle("Favorites");
+				fragmentManager.beginTransaction()
+						.replace(R.id.tab_layout_container, FavoritesFragment.newInstance(),"legislatorFragment").commit();
 				break;
 			case R.id.nav_about_me:
+				Intent intent=new Intent(this,AboutMeActivity.class);
+				startActivity(intent);
 				break;
 		}
 

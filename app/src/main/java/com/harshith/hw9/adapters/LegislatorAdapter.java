@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.harshith.hw9.R;
+import com.harshith.hw9.RecyclerViewClickListener;
+import com.harshith.hw9.fragments.LegislatorInfoFragment;
 import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.thirdPartyComponents.FastScrollRecyclerViewInterface;
 import com.squareup.picasso.Picasso;
@@ -23,16 +25,20 @@ import java.util.List;
  * Created by yashw on 24-11-2016.
  */
 
-public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.LegislatorViewHolder> implements FastScrollRecyclerViewInterface {
+public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.LegislatorViewHolder>
+		implements FastScrollRecyclerViewInterface {
 
 	private List<Legislator> dataSet;
 	private HashMap<String, Integer> mMapIndex;
 	private Context mContext;
+	private RecyclerViewClickListener mRecyclerViewClickListener;
 
-	public LegislatorAdapter(Context context, List<Legislator> dataSet, HashMap<String, Integer> mapIndex) {
+	public LegislatorAdapter(Context context, List<Legislator> dataSet, HashMap<String, Integer> mapIndex,RecyclerViewClickListener recyclerViewClickListener) {
 		this.dataSet=dataSet;
 		this.mMapIndex=mapIndex;
 		mContext=context;
+		mRecyclerViewClickListener=recyclerViewClickListener;
+
 	}
 
 	@Override
@@ -87,12 +93,13 @@ public class LegislatorAdapter extends RecyclerView.Adapter<LegislatorAdapter.Le
 			textViewName=(TextView)itemView.findViewById(R.id.text_view_name);
 			textViewDetails=(TextView)itemView.findViewById(R.id.subHeader);
 			imageThumbNail=(ImageView)itemView.findViewById(R.id.image_view_thumbnail);
+			itemView.setClickable(true);
 			itemView.setOnClickListener(this);
 		}
 
 		@Override
 		public void onClick(View view) {
-//			Intent intent=new Intent(mContext,LegislatorInfo.class);
+			mRecyclerViewClickListener.onRecyclerViewItemClicked(this.getLayoutPosition());
 		}
 	}
 }

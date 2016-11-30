@@ -1,0 +1,85 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.harshith.hw9.fragments.LegislatorInfoFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/social_media_links"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:layout_gravity="end">
+
+            <ImageView
+                android:id="@+id/image_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/ic_star_border_black_24dp"/>
+
+            <ImageView
+                android:id="@+id/image_facebook"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/ic_facebook"/>
+
+            <ImageView
+                android:id="@+id/image_twitter"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/ic_twitter"/>
+
+            <ImageView
+                android:id="@+id/image_website"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/ic_public_black_24dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image_candidate_picture"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="6dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/image_party_symbol"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_party_republican"/>
+
+            <TextView
+                android:id="@+id/text_party_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:text="Republic"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/candidate_details"/>
+
+    </LinearLayout>
+
+</ScrollView>

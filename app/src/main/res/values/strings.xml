@@ -13,9 +13,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="id_number">2735 0858 94</string>
+    <string name="name">Harshith Guru Prasad</string>
     <array name="tab_titles">
         <item>By State</item>
         <item>House</item>
         <item>Senate</item>
     </array>
+    <string name="title_activity_about_me">About Me</string>
+    <string name="title_activity_legislator_info">Legislator Details</string>
+    <string name="title_activity_bill_info">Bill Details</string>
 </resources>

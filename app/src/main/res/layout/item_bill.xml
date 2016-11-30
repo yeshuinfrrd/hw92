@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text_view_bill_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hconres129-114"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+
+    <TextView
+        android:id="@+id/text_view_bill_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_bill_id"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="6dp"
+        android:text="A concurrent resolution providing for a conditional adjournment or recess of the Senate and an adjournment of the House of Representatives"/>
+
+    <TextView
+        android:id="@+id/text_view_introduced_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_view_bill_title"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:text="2015-06-24"/>
+
+</RelativeLayout>

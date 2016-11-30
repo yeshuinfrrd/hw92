@@ -3,6 +3,10 @@ package com.harshith.hw9.network;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
+import com.harshith.hw9.models.Bill;
+import com.harshith.hw9.models.BillsResponseModel;
+import com.harshith.hw9.models.Committee;
+import com.harshith.hw9.models.CommitteeResposeModel;
 import com.harshith.hw9.models.Legislator;
 import com.harshith.hw9.models.LegislatorsResponseModel;
 
@@ -56,12 +60,54 @@ public class ApiServices {
 		apiResponse.enqueue(callback);
 	}
 
+	public void fetchBills() {
+		ApiCalls apiCalls = NetworkManager.getInstance().createService(ApiCalls.class,API_GATEWAY_BASE_URL);
+		final Call apiResponse = apiCalls.getBills("bills?apikey=apikey=b2aff0a1fbed4ac08b2daefb56f7c9a4&per_page=50");
+		Callback<BillsResponseModel> callback =  new Callback<BillsResponseModel>() {
+			@Override
+			public void onResponse(Call<BillsResponseModel> call, Response<BillsResponseModel> response) {
+				if(response.isSuccessful()) {
+					apiResponseCallbacks.get().onFetchBillsSuccessful(response.body().getResults());
+				} else {
+					apiResponseCallbacks.get().onFetchBillsFailure();
+				}
+			}
+
+			@Override
+			public void onFailure(Call<BillsResponseModel> call, Throwable t) {
+				apiResponseCallbacks.get().onFetchBillsFailure();
+			}
+		};
+		apiResponse.enqueue(callback);
+	}
+
+	public void fetchCommittees() {
+		ApiCalls apiCalls = NetworkManager.getInstance().createService(ApiCalls.class,API_GATEWAY_BASE_URL);
+		final Call apiResponse = apiCalls.getCommittees("committees?apikey=b2aff0a1fbed4ac08b2daefb56f7c9a4&per_page=all");
+		Callback<CommitteeResposeModel> callback =  new Callback<CommitteeResposeModel>() {
+			@Override
+			public void onResponse(Call<CommitteeResposeModel> call, Response<CommitteeResposeModel> response) {
+				if(response.isSuccessful()) {
+					apiResponseCallbacks.get().onFetchCommitteesSuccessful(response.body().getResults());
+				} else {
+					apiResponseCallbacks.get().onFetchCommitteesFailure();
+				}
+			}
+
+			@Override
+			public void onFailure(Call<CommitteeResposeModel> call, Throwable t) {
+				apiResponseCallbacks.get().onFetchCommitteesFailure();
+			}
+		};
+		apiResponse.enqueue(callback);
+	}
+
 	public interface ApiResponseCallbacks {
 		void onFetchLegislatorsSuccessful(List<Legislator> legislatorList);
 		void onFetchLegislatorsFailure();
-		void onFetchBillsSuccessful();
+		void onFetchBillsSuccessful(List<Bill> billList);
 		void onFetchBillsFailure();
-		void onFetchCommitteesSuccessful();
+		void onFetchCommitteesSuccessful(List<Committee> committeeList);
 		void onFetchCommitteesFailure();
 	}
 
@@ -69,5 +115,11 @@ public class ApiServices {
 
 		@GET
 		Call<LegislatorsResponseModel> getLegislators(@Url String url);
+
+		@GET
+		Call<BillsResponseModel> getBills(@Url String url);
+
+		@GET
+		Call<CommitteeResposeModel> getCommittees(@Url String url);
 	}
 }

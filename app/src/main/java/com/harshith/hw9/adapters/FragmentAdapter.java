@@ -19,11 +19,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 	private ArrayList<Fragment> fragmentList;
 	String[] mTitleList;
 
-	public FragmentAdapter(FragmentManager fm, Context mContext, ArrayList<Fragment> fragmentList) {
+	public FragmentAdapter(FragmentManager fm, Context mContext, ArrayList<Fragment> fragmentList,String[] tabTitles) {
 		super(fm);
 		this.mContext = mContext;
 		this.fragmentList = fragmentList;
-		mTitleList=mContext.getResources().getStringArray(R.array.tab_titles);
+		mTitleList=tabTitles;
 	}
 
 	@Override
